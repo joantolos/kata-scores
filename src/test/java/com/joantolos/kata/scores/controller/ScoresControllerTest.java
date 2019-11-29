@@ -23,7 +23,7 @@ public class ScoresControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void shouldGetLogin() throws Exception {
+    public void shouldGetTokenWhenValidUser() throws Exception {
 
         this.mockMvc
                 .perform(post("/login")
@@ -32,5 +32,16 @@ public class ScoresControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token").exists());
+    }
+
+    @Test
+    public void shouldFailWhenNoValidUser() throws Exception {
+
+        this.mockMvc
+                .perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"user\": \"luke\", \"password\": \"xxx\" }"))
+                .andDo(print())
+                .andExpect(status().is(401));
     }
 }
