@@ -1,5 +1,7 @@
 package com.joantolos.kata.scores.domain.service;
 
+import com.joantolos.kata.scores.domain.entity.LoginInput;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,15 @@ public class AuthenticationService {
 
     private Map<String, Timestamp> tokens;
 
-    public String newToken() {
-        return "123";
+    public String newToken(LoginInput loginInput) throws AuthenticationException {
+        if (isValidUser(loginInput)) {
+            return "123";
+        } else {
+            throw new AuthenticationException("Invalid login");
+        }
+    }
+
+    private boolean isValidUser(LoginInput loginInput) {
+        return true;
     }
 }

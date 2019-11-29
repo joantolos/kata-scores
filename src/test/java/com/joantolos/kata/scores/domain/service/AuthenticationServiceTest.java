@@ -1,5 +1,7 @@
 package com.joantolos.kata.scores.domain.service;
 
+import com.joantolos.kata.scores.domain.entity.LoginInput;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +16,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void shouldCreateNewToken() {
-        Assert.assertNotNull(authenticationService.newToken());
+    public void shouldCreateNewToken() throws AuthenticationException {
+        Assert.assertNotNull(authenticationService.newToken(new LoginInput("joan","password")));
     }
 }
