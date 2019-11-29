@@ -17,14 +17,11 @@ public class AuthenticationService {
     private Map<String, Timestamp> tokens;
 
     public String newToken(LoginInput loginInput) throws AuthenticationException {
-        if (isValidUser(loginInput)) {
+        if (Login.isValid(loginInput)) {
             return "123";
         } else {
             throw new AuthenticationException("Invalid login");
         }
     }
 
-    private boolean isValidUser(LoginInput loginInput) {
-        return true;
-    }
 }

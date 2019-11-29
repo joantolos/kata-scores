@@ -17,6 +17,6 @@ public class AuthenticationServiceTest {
 
     @Test
     public void shouldCreateNewToken() throws AuthenticationException {
-        Assert.assertNotNull(authenticationService.newToken(new LoginInput("joan","password")));
+        Assert.assertNotNull(authenticationService.newToken(new LoginInput("luke","123")));
     }
 }

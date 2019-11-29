@@ -28,9 +28,9 @@ public class ScoresControllerTest {
         this.mockMvc
                 .perform(post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"user\": \"joan\", \"password\": \"123\" }"))
+                        .content("{ \"user\": \"luke\", \"password\": \"123\" }"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value("123"));
+                .andExpect(jsonPath("$.token").exists());
     }
 }
