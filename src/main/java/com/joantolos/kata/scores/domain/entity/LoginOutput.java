@@ -1,4 +1,4 @@
-package com.joantolos.kata.scores.domain;
+package com.joantolos.kata.scores.domain.entity;
 
 public class LoginOutput {
 
