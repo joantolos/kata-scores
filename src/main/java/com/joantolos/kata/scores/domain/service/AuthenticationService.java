@@ -21,6 +21,7 @@ public class AuthenticationService {
 
     @Autowired
     private InMemoryAuthentication inMemoryAuthentication;
+
     private Map<String, Timestamp> tokens;
 
     @PostConstruct

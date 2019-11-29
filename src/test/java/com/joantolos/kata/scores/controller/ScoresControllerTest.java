@@ -30,7 +30,7 @@ public class ScoresControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"user\": \"luke\", \"password\": \"123\" }"))
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.token").exists());
     }
 
@@ -42,6 +42,6 @@ public class ScoresControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"user\": \"luke\", \"password\": \"xxx\" }"))
                 .andDo(print())
-                .andExpect(status().is(401));
+                .andExpect(status().isUnauthorized());
     }
 }

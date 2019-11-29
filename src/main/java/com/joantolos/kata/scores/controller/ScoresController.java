@@ -26,7 +26,7 @@ public class ScoresController {
     public ResponseEntity login(@RequestBody LoginInput loginInput) {
         log.info("### POST /login endpoint called");
         try {
-            return ResponseEntity.ok(this.scoresService.getLoginOutput(loginInput));
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.scoresService.getLoginOutput(loginInput));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
