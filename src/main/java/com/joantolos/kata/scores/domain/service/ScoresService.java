@@ -15,4 +15,8 @@ public class ScoresService {
     public LoginOutput getLoginOutput(LoginInput loginInput) throws AuthenticationException {
         return new LoginOutput(this.authenticationService.newToken(loginInput));
     }
+
+    public void addLevel(int level, int score) throws AuthenticationException {
+
+    }
 }
