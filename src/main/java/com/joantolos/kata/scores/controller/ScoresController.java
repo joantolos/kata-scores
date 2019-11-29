@@ -22,6 +22,7 @@ public class ScoresController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<LoginOutput> login(@RequestBody LoginInput loginInput) {
+        log.info("### POST /login endpoint called");
         return ResponseEntity.ok(this.scoresService.getLoginOutput(loginInput));
     }
 }
