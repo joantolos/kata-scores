@@ -1,6 +1,6 @@
 package com.joantolos.kata.scores.domain.service;
 
-import com.joantolos.kata.scores.domain.dao.InMemoryAuthentication;
+import com.joantolos.kata.scores.domain.dao.InMemoryScores;
 import com.joantolos.kata.scores.domain.entity.LoginInput;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class AuthenticationService {
     private String tokenTimeout;
 
     @Autowired
-    private InMemoryAuthentication inMemoryAuthentication;
+    private InMemoryScores inMemoryAuthentication;
 
     private Map<String, Timestamp> tokens;
 

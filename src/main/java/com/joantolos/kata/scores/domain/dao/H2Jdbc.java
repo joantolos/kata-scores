@@ -24,51 +24,21 @@ public class H2Jdbc {
     @Value("${jdbc.user}")
     private String jdbcUser;
 
+    private Connection connection = null;
+
     @PostConstruct
-    public void init() throws SQLException {
+    public void init() throws SQLException, ClassNotFoundException {
+        Class.forName("org.h2.Driver");
+        this.connection = DriverManager.getConnection(jdbcURL, jdbcUser, "");
+
         String createDatabase = StringUtils.toString(this.getClass().getResourceAsStream("/createDatabase.sql"));
         this.executeStatement(createDatabase);
     }
 
-    public Connection getConnection() {
-        Connection connection = null;
-
-        try {
-            Class.forName("org.h2.Driver");
-            connection = DriverManager.getConnection(jdbcURL, jdbcUser, "");
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-    private void printSQLException(SQLException ex) {
-        for (Throwable e: ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
-        }
-    }
-
     public void executeStatement(String statementSQL) throws SQLException {
-
         log.info(statementSQL);
-
-        try (Connection connection = this.getConnection();
-             Statement statement = connection.createStatement()) {
-
+        try (Statement statement = connection.createStatement()) {
             statement.execute(statementSQL);
-
-        } catch (SQLException e) {
-            this.printSQLException(e);
         }
     }
 }

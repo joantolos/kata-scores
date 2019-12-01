@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 @Component
-public class InMemoryAuthentication implements AuthenticationDAO {
+public class InMemoryScores implements ScoresDAO {
 
     @Override
     public boolean isValid(LoginInput loginInput) {
