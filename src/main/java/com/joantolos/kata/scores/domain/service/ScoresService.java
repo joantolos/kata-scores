@@ -18,7 +18,11 @@ public class ScoresService {
         return new LoginOutput(this.authenticationService.newToken(loginInput));
     }
 
-    public void addLevel(int level, int score) throws AuthenticationException {
-
+    public void addLevel(int level, int score, String token) throws AuthenticationException {
+        if (this.authenticationService.isTokenValid(token)) {
+            System.out.println("Token valid");
+        } else {
+            throw new AuthenticationException("Invalid token " + token);
+        }
     }
 }

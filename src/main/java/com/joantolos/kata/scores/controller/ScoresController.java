@@ -36,7 +36,7 @@ public class ScoresController {
     public ResponseEntity addLevel(@PathVariable("level") int level, @PathVariable("score") int score) {
         log.info("### PUT /level endpoint called for level " + level + " and score " + score);
         try {
-            this.scoresService.addLevel(level, score);
+            this.scoresService.addLevel(level, score, "token");
             return ResponseEntity.noContent().build();
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

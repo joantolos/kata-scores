@@ -40,8 +40,16 @@ public class AuthenticationService {
         }
     }
 
+    public boolean isTokenValid(String token) {
+        return true;
+    }
+
     private synchronized void addToken(String token) {
         this.tokens.put(token, new Timestamp(System.currentTimeMillis()));
+    }
+
+    private synchronized void removeToken(String token) {
+        this.tokens.remove(token);
     }
 
 }
