@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class H2Jdbc {
@@ -27,7 +27,7 @@ public class H2Jdbc {
     private Connection connection = null;
 
     @PostConstruct
-    public void init() throws SQLException, ClassNotFoundException {
+    public void init() throws SQLException, ClassNotFoundException, IOException {
         Class.forName("org.h2.Driver");
         this.connection = DriverManager.getConnection(jdbcURL, jdbcUser, "");
 
@@ -40,5 +40,21 @@ public class H2Jdbc {
         try (Statement statement = connection.createStatement()) {
             statement.execute(statementSQL);
         }
+    }
+
+    public List<Object> executeQuery(String querySQL, List<String> columnNames) throws SQLException {
+        List<Object> queryResults = new ArrayList<>();
+
+        try (Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery(querySQL);
+
+            while (rs.next()) {
+                for (String columnName : columnNames) {
+                    queryResults.add(rs.getObject(columnName));
+                }
+            }
+        }
+
+        return queryResults;
     }
 }

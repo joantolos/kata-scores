@@ -7,18 +7,13 @@ import java.io.InputStreamReader;
 
 public class StringUtils {
 
-    public static String toString(InputStream stream) {
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            BufferedReader br = new BufferedReader(new InputStreamReader((InputStream)stream));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static String toString(InputStream stream) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        String line;
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
         }
-        return "";
+        return sb.toString();
     }
 }

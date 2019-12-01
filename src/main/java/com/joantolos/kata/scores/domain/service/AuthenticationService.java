@@ -1,6 +1,6 @@
 package com.joantolos.kata.scores.domain.service;
 
-import com.joantolos.kata.scores.domain.dao.InMemoryScores;
+import com.joantolos.kata.scores.domain.dao.H2Scores;
 import com.joantolos.kata.scores.domain.entity.LoginInput;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class AuthenticationService {
     private String tokenTimeout;
 
     @Autowired
-    private InMemoryScores inMemoryAuthentication;
+    private H2Scores h2Scores;
 
     private Map<String, Timestamp> tokens;
 
@@ -29,8 +30,8 @@ public class AuthenticationService {
         this.tokens = new HashMap<>();
     }
 
-    public String newToken(LoginInput loginInput) throws AuthenticationException {
-        if (this.inMemoryAuthentication.isValid(loginInput)) {
+    public String newToken(LoginInput loginInput) throws AuthenticationException, SQLException {
+        if (this.h2Scores.isValid(loginInput)) {
             String token = UUID.randomUUID().toString();
             this.addToken(token);
             return token;

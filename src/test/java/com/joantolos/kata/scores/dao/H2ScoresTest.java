@@ -1,7 +1,7 @@
-package com.joantolos.kata.scores.domain.service;
+package com.joantolos.kata.scores.dao;
 
+import com.joantolos.kata.scores.domain.dao.H2Scores;
 import com.joantolos.kata.scores.domain.entity.LoginInput;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +15,14 @@ import java.sql.SQLException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuthenticationServiceTest {
+public class H2ScoresTest {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private H2Scores h2Scores;
 
     @Test
-    public void shouldCreateNewToken() throws AuthenticationException, SQLException {
-        Assert.assertNotNull(authenticationService.newToken(new LoginInput("luke","123")));
+    public void shouldCreateNewToken() throws SQLException {
+        boolean isValid = h2Scores.isValid(new LoginInput("luke", "123"));
+        Assert.assertTrue(isValid);
     }
 }

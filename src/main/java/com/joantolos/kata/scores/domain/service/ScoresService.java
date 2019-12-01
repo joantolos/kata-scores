@@ -6,13 +6,15 @@ import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
+
 @Component
 public class ScoresService {
 
     @Autowired
     private AuthenticationService authenticationService;
 
-    public LoginOutput getLoginOutput(LoginInput loginInput) throws AuthenticationException {
+    public LoginOutput getLoginOutput(LoginInput loginInput) throws AuthenticationException, SQLException {
         return new LoginOutput(this.authenticationService.newToken(loginInput));
     }
 
