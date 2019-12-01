@@ -1,5 +1,10 @@
 package com.joantolos.kata.scores.domain.dao;
 
+import com.joantolos.kata.scores.controller.ScoresController;
+import com.joantolos.kata.scores.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -11,13 +16,18 @@ import java.sql.Statement;
 @Component
 public class H2Jdbc {
 
-    private static String jdbcURL = "jdbc:h2:~/test";
-    private static String jdbcUsername = "sa";
-    private static String jdbcPassword = "";
+    private final Logger log = LoggerFactory.getLogger(ScoresController.class);
+
+    @Value("${jdbc.url}")
+    private String jdbcURL;
+
+    @Value("${jdbc.user}")
+    private String jdbcUser;
 
     @PostConstruct
     public void init() throws SQLException {
-        this.createTable();
+        String createDatabase = StringUtils.toString(this.getClass().getResourceAsStream("/createDatabase.sql"));
+        this.executeStatement(createDatabase);
     }
 
     public Connection getConnection() {
@@ -25,7 +35,7 @@ public class H2Jdbc {
 
         try {
             Class.forName("org.h2.Driver");
-            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+            connection = DriverManager.getConnection(jdbcURL, jdbcUser, "");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -48,20 +58,14 @@ public class H2Jdbc {
         }
     }
 
-    public void createTable() throws SQLException {
+    public void executeStatement(String statementSQL) throws SQLException {
 
-        String createTableSQL = "create table users (\r\n" + "  id  int(3) primary key,\r\n" +
-                "  name varchar(20),\r\n" + "  email varchar(20),\r\n" + "  country varchar(20),\r\n" +
-                "  password varchar(20)\r\n" + "  );";
+        log.info(statementSQL);
 
-        System.out.println(createTableSQL);
-        // Step 1: Establishing a Connection
         try (Connection connection = this.getConnection();
-             // Step 2:Create a statement using connection object
-             Statement statement = connection.createStatement();) {
+             Statement statement = connection.createStatement()) {
 
-            // Step 3: Execute the query or update query
-            statement.execute(createTableSQL);
+            statement.execute(statementSQL);
 
         } catch (SQLException e) {
             this.printSQLException(e);

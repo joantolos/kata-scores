@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user (
+	username	VARCHAR(30) NOT NULL,
+	password	VARCHAR(30) NOT NULL
+);
+
+ALTER TABLE user ADD CONSTRAINT p_user PRIMARY KEY (username);
+
+INSERT INTO user VALUES('luke', '123');
+INSERT INTO user VALUES('vader', '456');
+INSERT INTO user VALUES('yoda', '789');
