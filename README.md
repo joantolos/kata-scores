@@ -26,11 +26,11 @@ High score list for a level: Retrieves the high scores for a specific level for 
 
 ### Localhost
 
-Run 
+Run:
 
     ./gradlew clean build
 
-You will find the test coverage report at: /buil/jacocoHtml/index.html
+You will find the test coverage report at: /build/jacocoHtml/index.html
 
 1. You can run directly the jar file:
 
