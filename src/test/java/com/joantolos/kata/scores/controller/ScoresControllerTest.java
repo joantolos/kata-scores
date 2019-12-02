@@ -2,6 +2,7 @@ package com.joantolos.kata.scores.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joantolos.kata.scores.domain.entity.LoginOutput;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -70,6 +72,25 @@ public class ScoresControllerTest {
                 .perform(put("/level/3/score/1500").header("Session-key", "Bad-Token"))
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void shouldRetrieveScores() throws Exception {
+
+        this.mockMvc
+                .perform(get("/level/3/score?filter=highestscore").header("Session-key", getToken()))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Ignore
+    public void shouldFailWhenRetrievingWithNoValidToken() throws Exception {
+        this.mockMvc
+                .perform(get("/level/3/score?filter=highestscore").header("Session-key", "Bad-Token"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.users").exists());;
     }
 
     @Test

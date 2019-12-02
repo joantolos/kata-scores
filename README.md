@@ -19,7 +19,7 @@ Add Level Scores: This other endpoint can be called several times per user and l
 High score list for a level: Retrieves the high scores for a specific level for each user.
 
     Request: GET /level/3/score?filter=highestscore
-    Response: JSON of array <userid> and <score>
+    Response: JSON of array <username> and <score>
     Code: 200
  
 ## Deployed on Heroku   

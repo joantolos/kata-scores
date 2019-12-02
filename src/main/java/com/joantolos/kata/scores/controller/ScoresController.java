@@ -31,11 +31,21 @@ public class ScoresController {
     }
 
     @RequestMapping(value = "/level/{level}/score/{score}", method = RequestMethod.PUT)
-    public ResponseEntity addLevel(@RequestHeader("Session-key") String token, @PathVariable("level") int level, @PathVariable("score") int score) throws SQLException {
+    public ResponseEntity addScore(@RequestHeader("Session-key") String token, @PathVariable("level") int level, @PathVariable("score") int score) throws SQLException {
         log.info("### PUT /level endpoint called for level " + level + " and score " + score);
         try {
-            this.scoresService.addLevel(level, score, token);
+            this.scoresService.addScore(level, score, token);
             return ResponseEntity.noContent().build();
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @RequestMapping(value = "/level/{level}/score", method = RequestMethod.GET)
+    public ResponseEntity getScore(@RequestHeader("Session-key") String token, @PathVariable("level") int level, @RequestParam("filter") String filter) throws SQLException {
+        log.info("### GET /level endpoint called for level " + level + " and filter " + filter);
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(this.scoresService.getScore(level, filter, token));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
