@@ -24,6 +24,9 @@ public class H2Jdbc {
     @Value("${jdbc.user}")
     private String jdbcUser;
 
+    @Value("${database.script}")
+    private String databaseScript;
+
     private Connection connection = null;
 
     @PostConstruct
@@ -31,7 +34,7 @@ public class H2Jdbc {
         Class.forName("org.h2.Driver");
         this.connection = DriverManager.getConnection(jdbcURL, jdbcUser, "");
 
-        String createDatabase = StringUtils.toString(this.getClass().getResourceAsStream("/createDatabase.sql"));
+        String createDatabase = StringUtils.toString(this.getClass().getResourceAsStream("/" + databaseScript));
         this.executeStatement(createDatabase);
     }
 
