@@ -2,6 +2,7 @@ package com.joantolos.kata.scores.domain.dao;
 
 import com.joantolos.kata.scores.domain.entity.Filters;
 import com.joantolos.kata.scores.domain.entity.LoginInput;
+import com.joantolos.kata.scores.domain.entity.Score;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ScoresDAO {
 
     void insertScore(int level, int score, String username) throws SQLException;
 
-    List<Object> retrieveScore(int level, Filters filter) throws SQLException;
+    List<Score> retrieveScore(int level, Filters filter) throws SQLException;
 }

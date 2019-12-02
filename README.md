@@ -22,6 +22,6 @@ High score list for a level: Retrieves the high scores for a specific level for 
     Response: JSON of array <username> and <score>
     Code: 200
  
-## Deployed on Heroku   
+## Deployed on Heroku
 
 https://kata-scores.herokuapp.com/swagger-ui.html#/

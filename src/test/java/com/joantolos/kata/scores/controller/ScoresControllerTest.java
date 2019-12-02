@@ -2,7 +2,6 @@ package com.joantolos.kata.scores.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joantolos.kata.scores.domain.entity.LoginOutput;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,17 +79,16 @@ public class ScoresControllerTest {
         this.mockMvc
                 .perform(get("/level/3/score?filter=highestscore").header("Session-key", getToken()))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].username").exists());
     }
 
     @Test
-    @Ignore
     public void shouldFailWhenRetrievingWithNoValidToken() throws Exception {
         this.mockMvc
                 .perform(get("/level/3/score?filter=highestscore").header("Session-key", "Bad-Token"))
                 .andDo(print())
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.users").exists());;
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

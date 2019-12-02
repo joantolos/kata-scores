@@ -18,8 +18,3 @@ CREATE TABLE score (
 INSERT INTO users (username, password) VALUES('luke', '123');
 INSERT INTO users (username, password) VALUES('vader', '456');
 INSERT INTO users (username, password) VALUES('yoda', '789');
-
-INSERT INTO score (username, level, score) VALUES('luke', 3, 1500);
-INSERT INTO score (username, level, score) VALUES('luke', 3, 2000);
-INSERT INTO score (username, level, score) VALUES('luke', 4, 3000);
-INSERT INTO score (username, level, score) VALUES('vader', 3, 4000);
