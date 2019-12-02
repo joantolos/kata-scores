@@ -9,7 +9,7 @@ public class StringUtilsTest {
 
     @Test
     public void shouldGetStringFromInputStream() throws IOException {
-        String createDatabase = StringUtils.toString(this.getClass().getResourceAsStream("/createDatabase.sql"));
+        String createDatabase = new StringUtils().toString(this.getClass().getResourceAsStream("/createDatabase.sql"));
 
         Assert.assertTrue(createDatabase.contains("DROP TABLE IF EXI"));
     }

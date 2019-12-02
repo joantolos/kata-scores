@@ -4,6 +4,7 @@ import com.joantolos.kata.scores.controller.ScoresController;
 import com.joantolos.kata.scores.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,9 @@ import java.util.List;
 public class H2Jdbc {
 
     private final Logger log = LoggerFactory.getLogger(ScoresController.class);
+
+    @Autowired
+    private StringUtils stringUtils;
 
     @Value("${jdbc.url}")
     private String jdbcURL;
@@ -34,7 +38,7 @@ public class H2Jdbc {
         Class.forName("org.h2.Driver");
         this.connection = DriverManager.getConnection(jdbcURL, jdbcUser, "");
 
-        String createDatabase = StringUtils.toString(this.getClass().getResourceAsStream("/" + databaseScript));
+        String createDatabase = stringUtils.toString(this.getClass().getResourceAsStream("/" + databaseScript));
         this.executeStatement(createDatabase);
     }
 

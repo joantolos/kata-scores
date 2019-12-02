@@ -18,7 +18,7 @@ import java.util.UUID;
 public class AuthenticationService {
 
     @Value("${token.timeout}")
-    private String tokenTimeout;
+    private Long tokenTimeout;
 
     @Autowired
     private H2Scores h2Scores;
@@ -40,8 +40,16 @@ public class AuthenticationService {
         }
     }
 
-    public boolean isTokenValid(String token) {
-        return true;
+    boolean isTokenValid(String token) {
+        return tokens.containsKey(token) && !isExpired(token);
+    }
+
+    private boolean isExpired(String token) {
+        boolean isExpired = (System.currentTimeMillis() - tokens.get(token).getTime()) > tokenTimeout;
+        if(isExpired) {
+            removeToken(token);
+        }
+        return isExpired;
     }
 
     private synchronized void addToken(String token) {

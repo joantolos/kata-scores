@@ -4,6 +4,9 @@ public class LoginOutput {
 
     private String token;
 
+    public LoginOutput() {
+    }
+
     public LoginOutput(String token) {
         this.token = token;
     }
