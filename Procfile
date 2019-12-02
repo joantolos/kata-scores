@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar build/libs/kata-scores*.jar --spring.profiles.active=heroku
+web: java $JAVA_OPTS -jar build/libs/kata-scores*.jar
