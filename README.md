@@ -21,3 +21,7 @@ High score list for a level: Retrieves the high scores for a specific level for 
     Request: GET /level/3/score?filter=highestscore
     Response: JSON of array <userid> and <score>
     Code: 200
+ 
+## Deployed on Heroku   
+
+https://kata-scores.herokuapp.com/swagger-ui.html
