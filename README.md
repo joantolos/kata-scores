@@ -22,6 +22,40 @@ High score list for a level: Retrieves the high scores for a specific level for 
     Response: JSON of array <username> and <score>
     Code: 200
  
-## Deployed on Heroku
+## Start the app
+
+### Localhost
+
+Run 
+
+    ./gradlew clean build
+
+You will find the test coverage report at: /buil/jacocoHtml/index.html
+
+1. You can run directly the jar file:
+
+    java -jar build/libs/kata-scores-1.0.0.jar
+    
+2. Or you can run the bootRun task from gradle:
+
+    ./gradlew bootRun
+    
+3. Or you can run the main class located on com.joantolos.kata.scores.KataScoresApp on you IDE
+
+Once the app is running, you can access it on localhost:8080
+
+Swagger is included and accessible in: http://localhost:8080/swagger-ui.html#/ where you can try out the features.
+
+### Deployed on Heroku
+
+The app is deployed on Heroku and Swagger can be access at the following URL:
 
 https://kata-scores.herokuapp.com/swagger-ui.html#/
+
+## Configuration and parameters
+
+On the resources folder you can find the application.properties where you can configure:
+
+* The application port
+* The token timeout (in miliseconds)
+* The creation script for the database (H2 in memory database)
