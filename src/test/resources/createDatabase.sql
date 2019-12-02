@@ -1,12 +1,20 @@
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS score;
 
-CREATE TABLE user (
+CREATE TABLE users (
 	username	VARCHAR(30) NOT NULL,
 	password	VARCHAR(30) NOT NULL
 );
 
-ALTER TABLE user ADD CONSTRAINT p_user PRIMARY KEY (username);
+ALTER TABLE users ADD CONSTRAINT p_users PRIMARY KEY (username);
 
-INSERT INTO user VALUES('luke', '123');
-INSERT INTO user VALUES('vader', '456');
-INSERT INTO user VALUES('yoda', '789');
+CREATE TABLE score (
+	id			bigint auto_increment,
+	username	VARCHAR(30) NOT NULL,
+	level		INT NOT NULL,
+	score		INT NOT NULL
+);
+
+INSERT INTO users VALUES('luke', '123');
+INSERT INTO users VALUES('vader', '456');
+INSERT INTO users VALUES('yoda', '789');

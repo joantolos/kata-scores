@@ -31,7 +31,7 @@ public class ScoresController {
     }
 
     @RequestMapping(value = "/level/{level}/score/{score}", method = RequestMethod.PUT)
-    public ResponseEntity addLevel(@RequestHeader("Session-key") String token, @PathVariable("level") int level, @PathVariable("score") int score) {
+    public ResponseEntity addLevel(@RequestHeader("Session-key") String token, @PathVariable("level") int level, @PathVariable("score") int score) throws SQLException {
         log.info("### PUT /level endpoint called for level " + level + " and score " + score);
         try {
             this.scoresService.addLevel(level, score, token);

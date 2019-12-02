@@ -2,6 +2,7 @@ package com.joantolos.kata.scores.domain.service;
 
 import com.joantolos.kata.scores.domain.dao.H2Scores;
 import com.joantolos.kata.scores.domain.entity.LoginInput;
+import com.joantolos.kata.scores.domain.entity.TokenContent;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,7 @@ public class AuthenticationService {
     @Autowired
     private H2Scores h2Scores;
 
-    private Map<String, Timestamp> tokens;
+    private Map<String, TokenContent> tokens;
 
     @PostConstruct
     public void init() {
@@ -33,7 +34,7 @@ public class AuthenticationService {
     public String newToken(LoginInput loginInput) throws AuthenticationException, SQLException {
         if (this.h2Scores.isValid(loginInput)) {
             String token = UUID.randomUUID().toString();
-            this.addToken(token);
+            this.addToken(token, loginInput.getUser());
             return token;
         } else {
             throw new AuthenticationException("Invalid login");
@@ -45,19 +46,22 @@ public class AuthenticationService {
     }
 
     private boolean isExpired(String token) {
-        boolean isExpired = (System.currentTimeMillis() - tokens.get(token).getTime()) > tokenTimeout;
+        boolean isExpired = (System.currentTimeMillis() - tokens.get(token).getLoginTime().getTime()) > tokenTimeout;
         if(isExpired) {
             removeToken(token);
         }
         return isExpired;
     }
 
-    private synchronized void addToken(String token) {
-        this.tokens.put(token, new Timestamp(System.currentTimeMillis()));
+    private synchronized void addToken(String token, String username) {
+        this.tokens.put(token, new TokenContent(new Timestamp(System.currentTimeMillis()), username));
     }
 
     private synchronized void removeToken(String token) {
         this.tokens.remove(token);
     }
 
+    public String getUsername(String token) {
+        return this.tokens.get(token).getUsername();
+    }
 }
