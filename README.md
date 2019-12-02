@@ -24,4 +24,4 @@ High score list for a level: Retrieves the high scores for a specific level for 
  
 ## Deployed on Heroku   
 
-https://kata-scores.herokuapp.com/swagger-ui.html
+https://kata-scores.herokuapp.com/swagger-ui.html#/

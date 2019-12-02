@@ -17,11 +17,6 @@ buildscript {
     }
 }
 
-bootJar {
-    baseName = 'kata-scores'
-    version = '1.0.1-SNAPSHOT'
-}
-
 repositories {
     mavenCentral()
 }
@@ -43,6 +38,12 @@ jacocoTestReport {
             fileTree(dir: it, exclude: ['**/com/joantolos/kata/scores/KataScoresApp**'])
         })
     }
+}
+
+bootJar {
+    mainClassName = 'com.joantolos.kata.scores.KataScoresApp'
+    baseName = 'kata-scores'
+    version =  '1.0.0'
 }
 
 dependencies {
