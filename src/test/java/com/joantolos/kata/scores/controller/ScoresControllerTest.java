@@ -84,6 +84,16 @@ public class ScoresControllerTest {
     }
 
     @Test
+    public void shouldRetrieveBasicScoresWhenNoFilter() throws Exception {
+
+        this.mockMvc
+                .perform(get("/level/3/score?filter=averagescore").header("Session-key", getToken()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].username").exists());
+    }
+
+    @Test
     public void shouldFailWhenRetrievingWithNoValidToken() throws Exception {
         this.mockMvc
                 .perform(get("/level/3/score?filter=highestscore").header("Session-key", "Bad-Token"))

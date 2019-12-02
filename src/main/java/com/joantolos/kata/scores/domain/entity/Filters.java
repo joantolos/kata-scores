@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public enum Filters {
 
-    HIGH_SCORE("highestscore");
+    HIGH_SCORE("highestscore"),
+    NONE("");
 
     private String name;
 
@@ -13,6 +14,6 @@ public enum Filters {
     }
 
     public static Filters getByName(String name) {
-        return Arrays.stream(Filters.values()).filter(filter -> filter.name.equals(name)).findFirst().orElse(null);
+        return Arrays.stream(Filters.values()).filter(filter -> filter.name.equals(name)).findFirst().orElse(Filters.NONE);
     }
 }
