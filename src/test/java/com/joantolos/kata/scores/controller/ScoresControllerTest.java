@@ -44,4 +44,5 @@ public class ScoresControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
+
 }

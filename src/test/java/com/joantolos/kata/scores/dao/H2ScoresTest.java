@@ -21,8 +21,7 @@ public class H2ScoresTest {
     private H2Scores h2Scores;
 
     @Test
-    public void shouldCreateNewToken() throws SQLException {
-        boolean isValid = h2Scores.isValid(new LoginInput("luke", "123"));
-        Assert.assertTrue(isValid);
+    public void shouldValidateLogin() throws SQLException {
+        Assert.assertTrue(h2Scores.isValid(new LoginInput("luke", "123")));
     }
 }

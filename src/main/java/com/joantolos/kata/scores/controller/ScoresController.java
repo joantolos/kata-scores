@@ -21,14 +21,12 @@ public class ScoresController {
     private ScoresService scoresService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody LoginInput loginInput) {
+    public ResponseEntity login(@RequestBody LoginInput loginInput) throws SQLException {
         log.info("### POST /login endpoint called");
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(this.scoresService.getLoginOutput(loginInput));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } catch (SQLException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
