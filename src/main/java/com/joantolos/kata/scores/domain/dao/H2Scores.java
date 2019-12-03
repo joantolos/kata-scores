@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 public class H2Scores extends H2Jdbc implements ScoresDAO {
@@ -39,14 +41,17 @@ public class H2Scores extends H2Jdbc implements ScoresDAO {
     }
 
     private List<Score> parseScores(List<Object> scores) {
-        List<Score> parsedScores = new ArrayList<>();
-        for (int i = 0; i < scores.size(); i++) {
-            if(scores.get(i) instanceof String) {
-                parsedScores.add(new Score(String.valueOf(scores.get(i)), (Integer) scores.get(i + 1)));
-            }
-        }
 
-        return parsedScores;
+        return IntStream.range(0, scores.size())
+                .mapToObj(index -> {
+                    if(scores.get(index) instanceof String) {
+                        return String.format("%d -> %s", index, scores.get(index));
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .map(score -> new Score(score.split(" -> ")[1], (Integer) scores.get(Integer.parseInt(score.split(" -> ")[0]) + 1)))
+                .collect(Collectors.toList());
     }
 
 }

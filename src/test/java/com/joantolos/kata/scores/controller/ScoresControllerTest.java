@@ -74,13 +74,14 @@ public class ScoresControllerTest {
     }
 
     @Test
-    public void shouldRetrieveScores() throws Exception {
+    public void shouldRetrieveHighestScore() throws Exception {
 
         this.mockMvc
                 .perform(get("/level/3/score?filter=highestscore").header("Session-key", getToken()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].username").exists());
+                .andExpect(jsonPath("$[0].username").value("luke"))
+                .andExpect(jsonPath("$[0].score").value("2000"));
     }
 
     @Test
