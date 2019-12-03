@@ -106,7 +106,7 @@ public class ScoresControllerTest {
     public void tokenShouldExpire() throws Exception {
         String token = getToken();
 
-        TimeUnit.SECONDS.sleep(4);
+        TimeUnit.SECONDS.sleep(3);
 
         this.mockMvc
                 .perform(put("/level/3/score/1500").header("Session-key", token))
