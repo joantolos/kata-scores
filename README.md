@@ -46,6 +46,18 @@ Once the app is running, you can access it on localhost:8080
 
 Swagger is included and accessible in: http://localhost:8080/swagger-ui.html#/ where you can try out the features.
 
+### Available users
+
+In order to use the login endpoint, these are the users available:
+
+| Username      | Password                  |
+|---------------|---------------------------|
+| luke          | 123                       |
+| vader         | 456                       |
+| yoda          | 789                       |
+
+This three users are inserted at the app start up with the database creation script. 
+
 ### Deployed on Heroku
 
 The app is deployed on Heroku and Swagger can be access at the following URL:
