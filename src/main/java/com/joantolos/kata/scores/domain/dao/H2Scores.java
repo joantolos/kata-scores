@@ -6,11 +6,7 @@ import com.joantolos.kata.scores.domain.entity.Score;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Component
 public class H2Scores extends H2Jdbc implements ScoresDAO {
@@ -29,7 +25,7 @@ public class H2Scores extends H2Jdbc implements ScoresDAO {
 
     @Override
     public List<Score> retrieveScore(int level, Filters filter) throws SQLException {
-        String getQuery = "";
+        String getQuery;
 
         switch (filter) {
             case HIGH_SCORE:
@@ -39,14 +35,18 @@ public class H2Scores extends H2Jdbc implements ScoresDAO {
                 getQuery = "SELECT s.username, s.score as score FROM score s WHERE s.level = " + level;
         }
 
-        List<Object> scores = super.executeQuery(getQuery, Arrays.asList("username", "score"));
-        Map<String, Integer> parsedScores = new HashMap<>();
+        return parseScores(super.executeQuery(getQuery, Arrays.asList("username", "score")));
+    }
+
+    private List<Score> parseScores(List<Object> scores) {
+        List<Score> parsedScores = new ArrayList<>();
         for (int i = 0; i < scores.size(); i++) {
             if(scores.get(i) instanceof String) {
-                parsedScores.put(String.valueOf(scores.get(i)), (Integer) scores.get(i + 1));
+                parsedScores.add(new Score(String.valueOf(scores.get(i)), (Integer) scores.get(i + 1)));
             }
         }
 
-        return parsedScores.entrySet().stream().map(parsedScore -> new Score(parsedScore.getKey(), parsedScore.getValue())).collect(Collectors.toList());
+        return parsedScores;
     }
+
 }
